@@ -11,22 +11,23 @@
   :root {
     box-sizing: border-box;
     --ink: #F4F7FB;
-    --muted: #A7B8D0;
-    --paper: #071A36;
-    --paper-panel: #0A2247;
-    --paper-panel-2: #0D2B57;
-    --line: rgba(150,180,220,0.14);
-    --grid-line: rgba(150,180,220,0.045);
-    --grid-mark: rgba(150,180,220,0.12);
-    --signal: #6EA8FF;
-    --signal-soft: rgba(110,168,255,0.12);
-    --bracket: rgba(110,168,255,0.45);
-    --star: #8FC1FF;
-    --proud-bg: #06152D;
+    --muted: #91A0B5;
+    --paper: #050B16;
+    --paper-panel: #081222;
+    --paper-panel-2: #0B1B33;
+    --line: rgba(120,168,255,0.14);
+    --grid: #14243A;
+    --signal: #78A8FF;
+    --signal-active: #A9C8FF;
+    --signal-strong: #5F96FF;
+    --signal-soft: rgba(120,168,255,0.12);
+    --bracket: rgba(120,168,255,0.45);
+    --star: #A9C8FF;
+    --proud-bg: #050B16;
     --proud-ink: #F4F7FB;
     --proud-line: rgba(244,247,251,0.18);
-    --proud-signal: #6EA8FF;
-    --proud-star: #8FC1FF;
+    --proud-signal: #78A8FF;
+    --proud-star: #A9C8FF;
     --font-display: 'Space Grotesk', 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
@@ -52,16 +53,15 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-      radial-gradient(circle, var(--grid-mark) 1px, transparent 1.5px);
-    background-size: 80px 80px, 80px 80px, 320px 320px;
-    background-position: 0 0, 0 0, 0 0;
-    animation: grid-pan 26s linear infinite;
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px;
+    background-position: 0 0, 0 0;
+    animation: grid-pan 34s linear infinite;
   }
   @keyframes grid-pan {
-    from { background-position: 0 0, 0 0, 0 0; }
-    to { background-position: 320px 320px, 320px 320px, 320px 320px; }
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 320px 320px, 320px 320px; }
   }
   body::after {
     content: "";
@@ -70,23 +70,38 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      radial-gradient(circle, rgba(110,168,255,0.06), transparent 65%),
-      radial-gradient(circle, rgba(110,168,255,0.045), transparent 65%);
+      radial-gradient(circle, rgba(120,168,255,0.05), transparent 65%),
+      radial-gradient(circle, rgba(120,168,255,0.035), transparent 65%);
     background-size: 900px 900px, 1100px 1100px;
     background-repeat: no-repeat;
     background-position: 8% 15%, 88% 82%;
-    animation: ambient-drift 42s ease-in-out infinite alternate;
+    animation: ambient-drift 46s ease-in-out infinite alternate;
   }
   @keyframes ambient-drift {
     from { background-position: 8% 15%, 88% 82%; }
     to { background-position: 20% 26%, 76% 70%; }
   }
+  .data-flow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .data-flow .flow-path {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+  .data-flow .signal-dot { fill: var(--signal-strong); }
   .cursor-glow {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(circle 260px at var(--cx, 50%) var(--cy, 50%), rgba(110,168,255,0.08), transparent 70%);
+    background: radial-gradient(circle 260px at var(--cx, 50%) var(--cy, 50%), rgba(120,168,255,0.07), transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
   }
@@ -96,6 +111,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     body::before, body::after { animation: none; }
+    .data-flow { display: none; }
     .cursor-glow { display: none; }
   }
 
@@ -1132,6 +1148,29 @@
 </head>
 <body>
 
+<svg class="data-flow" aria-hidden="true" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <path id="flow-path-1" class="flow-path" opacity="0.10" d="M -50 620 C 250 500, 450 700, 700 480 S 1100 250, 1300 300" />
+  <path id="flow-path-2" class="flow-path" opacity="0.08" d="M -80 200 C 200 350, 500 120, 800 280 S 1150 500, 1350 420" />
+  <path id="flow-path-3" class="flow-path" opacity="0.07" d="M -60 450 C 300 300, 600 550, 900 350 S 1200 150, 1400 220" />
+  <circle class="signal-dot" r="2.6" opacity="0.5">
+    <animateMotion dur="22s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#flow-path-1" />
+    </animateMotion>
+    <animate attributeName="opacity" values="0.3;0.75;0.3" dur="6s" repeatCount="indefinite" />
+  </circle>
+  <circle class="signal-dot" r="2.2" opacity="0.45">
+    <animateMotion dur="27s" begin="-6s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#flow-path-2" />
+    </animateMotion>
+    <animate attributeName="opacity" values="0.25;0.65;0.25" dur="7s" repeatCount="indefinite" />
+  </circle>
+  <circle class="signal-dot" r="2.4" opacity="0.45">
+    <animateMotion dur="30s" begin="-12s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#flow-path-3" />
+    </animateMotion>
+    <animate attributeName="opacity" values="0.28;0.7;0.28" dur="8s" repeatCount="indefinite" />
+  </circle>
+</svg>
 <div class="cursor-glow" aria-hidden="true"></div>
 <script>
   (function () {
