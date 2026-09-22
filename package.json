@@ -1,0 +1,14 @@
+{
+  "name": "fyamina-gtm-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fyamina Rout — GTM Engineer portfolio. Static single-page site (self-contained HTML/CSS/JS, exported as-is from Claude Artifacts).",
+  "scripts": {
+    "dev": "serve . -l 3000",
+    "start": "serve . -l 3000",
+    "build": "echo 'Static site — no build step required. index.html is deployed as-is.'"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
