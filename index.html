@@ -57,6 +57,46 @@
       radial-gradient(circle, var(--grid-mark) 1px, transparent 1.5px);
     background-size: 80px 80px, 80px 80px, 320px 320px;
     background-position: 0 0, 0 0, 0 0;
+    animation: grid-pan 26s linear infinite;
+  }
+  @keyframes grid-pan {
+    from { background-position: 0 0, 0 0, 0 0; }
+    to { background-position: 320px 320px, 320px 320px, 320px 320px; }
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, rgba(110,168,255,0.06), transparent 65%),
+      radial-gradient(circle, rgba(110,168,255,0.045), transparent 65%);
+    background-size: 900px 900px, 1100px 1100px;
+    background-repeat: no-repeat;
+    background-position: 8% 15%, 88% 82%;
+    animation: ambient-drift 42s ease-in-out infinite alternate;
+  }
+  @keyframes ambient-drift {
+    from { background-position: 8% 15%, 88% 82%; }
+    to { background-position: 20% 26%, 76% 70%; }
+  }
+  .cursor-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle 260px at var(--cx, 50%) var(--cy, 50%), rgba(110,168,255,0.08), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .cursor-glow.is-active { opacity: 1; }
+  @media (hover: none), (pointer: coarse) {
+    .cursor-glow { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, body::after { animation: none; }
+    .cursor-glow { display: none; }
   }
 
   a { color: inherit; }
@@ -1090,6 +1130,30 @@
 </style>
 </head>
 <body>
+
+<div class="cursor-glow" aria-hidden="true"></div>
+<script>
+  (function () {
+    var glow = document.querySelector('.cursor-glow');
+    if (!glow) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (reduceMotion || isTouch) return;
+    var raf = null;
+    window.addEventListener('pointermove', function (e) {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        glow.style.setProperty('--cx', e.clientX + 'px');
+        glow.style.setProperty('--cy', e.clientY + 'px');
+        glow.classList.add('is-active');
+        raf = null;
+      });
+    }, { passive: true });
+    window.addEventListener('pointerleave', function () {
+      glow.classList.remove('is-active');
+    });
+  })();
+</script>
 
 <div class="topbar">
   <a class="mark" href="#" onclick="goHome(); return false;">FR</a>
