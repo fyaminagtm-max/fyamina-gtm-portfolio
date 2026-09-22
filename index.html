@@ -11,13 +11,16 @@
   :root {
     box-sizing: border-box;
     --ink: #F4F7FB;
-    --muted: #91A4BE;
+    --muted: #A7B8D0;
     --paper: #071A36;
     --paper-panel: #0A2247;
     --paper-panel-2: #0D2B57;
-    --line: rgba(150,180,220,0.22);
+    --line: rgba(150,180,220,0.14);
+    --grid-line: rgba(150,180,220,0.045);
+    --grid-mark: rgba(150,180,220,0.12);
     --signal: #6EA8FF;
     --signal-soft: rgba(110,168,255,0.12);
+    --bracket: rgba(110,168,255,0.45);
     --star: #8FC1FF;
     --proud-bg: #06152D;
     --proud-ink: #F4F7FB;
@@ -49,10 +52,10 @@
     z-index: -1;
     pointer-events: none;
     background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M4 0V8M0 4H8' stroke='%2391A4BE' stroke-width='1' stroke-opacity='0.35'/%3E%3C/svg%3E");
-    background-size: 56px 56px, 56px 56px, 224px 224px;
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      radial-gradient(circle, var(--grid-mark) 1px, transparent 1.5px);
+    background-size: 80px 80px, 80px 80px, 320px 320px;
     background-position: 0 0, 0 0, 0 0;
   }
 
@@ -238,22 +241,22 @@
   .grid {
     display: flex;
     flex-direction: column;
-    gap: 20px;
   }
 
   .card {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 36px clamp(24px, 4vw, 40px);
+    padding: 40px 0;
     cursor: pointer;
-    border: 1px solid var(--line);
-    background: var(--paper-panel);
-    transition: border-color 0.15s ease, background 0.15s ease;
+    border-top: 1px solid var(--line);
+    background: none;
+    transition: color 0.15s ease;
     text-align: left;
   }
-  .card:hover, .card:focus-visible { border-color: var(--signal); background: var(--paper-panel-2); }
-  .card:hover h3, .card:focus-visible h3 { color: var(--signal); }
+  .card:last-child { padding-bottom: 8px; }
+  .card:hover h3, .card:focus-visible h3,
+  .card:hover .watch, .card:focus-visible .watch { color: var(--signal); }
 
   .card .num {
     font-family: var(--font-mono);
@@ -317,30 +320,29 @@
 
   .card-deco { display: none; }
 
-  /* corner-bracket detail on technical panels */
-  .card::before, .card::after,
+  /* corner-bracket detail — reserved for panels that represent an actual technical artifact (video, workflow, document) */
   .video-embed::before, .video-embed::after,
   .workflow::before, .workflow::after,
   .doc-card::before, .doc-card::after {
     content: "";
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     pointer-events: none;
   }
-  .card::before, .video-embed::before, .workflow::before, .doc-card::before {
+  .video-embed::before, .workflow::before, .doc-card::before {
     top: -1px; left: -1px;
-    border-top: 1px solid var(--signal);
-    border-left: 1px solid var(--signal);
+    border-top: 1px solid var(--bracket);
+    border-left: 1px solid var(--bracket);
   }
-  .card::after, .video-embed::after, .workflow::after, .doc-card::after {
+  .video-embed::after, .workflow::after, .doc-card::after {
     bottom: -1px; right: -1px;
-    border-bottom: 1px solid var(--signal);
-    border-right: 1px solid var(--signal);
+    border-bottom: 1px solid var(--bracket);
+    border-right: 1px solid var(--bracket);
   }
 
-  /* card 3: proudest build — same system, emphasized as the flagship */
-  .card--proud { border-color: var(--signal); background: var(--paper-panel-2); padding: 44px clamp(24px, 4vw, 44px); }
+  /* card 3: proudest build — same row system, restrained flagship emphasis */
+  .card--proud { border-top: 2px solid var(--signal); }
   .card--proud h3 { font-size: clamp(28px, 4vw, 40px); }
   .card--proud .badge {
     font-family: var(--font-mono);
