@@ -1791,7 +1791,11 @@
       sub: "Overseas Placement Supply Chain",
       tagline: "Built an end-to-end GTM intelligence system spanning market discovery, account classification, international-hiring intelligence, India-eligibility screening, nursing demand mapping, and requirement/relationship tracking.",
       chain: ["Market Discovery", "Account Classification", "International Hiring", "India Eligibility", "Nursing Demand", "Requirements", "Relationships", "Contact Enrichment", "Outreach", "CRM Activation"],
-      video: { title: "Watch what I built", sub: "A walkthrough of the complete system." },
+      video: {
+        title: "WATCH WHAT I BUILT",
+        sub: "A walkthrough of the complete Overseas Placement Supply Chain Intelligence system.",
+        loom: "https://www.loom.com/embed/c81f817ebaab4c5fb0d3fa3d671f59f4"
+      },
       workflow: [
         { label: "Market Discovery", body: "Placeholder — detail on this stage to come." },
         { label: "Account Classification", body: "Placeholder — detail on this stage to come." },
@@ -2141,7 +2145,7 @@ Fyamina!`
       <div class="pv-section" style="border-top:none; padding-top:0;">
         <h2>${p.video.title}</h2>
         <p>${p.video.sub}</p>
-        ${VideoEmbed('WATCH THE FULL WALKTHROUGH →', { hero: true })}
+        ${LoomEmbed(p.video.loom, p.video.title)}
       </div>
       <div class="pv-section">
         <h2>The System</h2>
