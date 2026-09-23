@@ -6,7 +6,7 @@
 <title>Fyamina Rout — GTM Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     box-sizing: border-box;
@@ -28,9 +28,10 @@
     --proud-line: rgba(244,247,251,0.18);
     --proud-signal: #78A8FF;
     --proud-star: #A9C8FF;
-    --font-display: 'Space Grotesk', 'Inter', sans-serif;
+    --font-display: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
+    --font-script: 'Caveat', cursive;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
@@ -215,20 +216,19 @@
   .hero .role {
     font-family: var(--font-mono);
     font-weight: 600;
-    font-size: clamp(15px, 1.5vw, 18px);
+    font-size: clamp(17px, 1.7vw, 21px);
     letter-spacing: 0.22em;
     color: var(--signal);
     margin: 0;
     opacity: 0.95;
   }
   .hero .line {
-    font-family: var(--font-body);
+    font-family: var(--font-script);
     font-weight: 400;
-    font-style: italic;
-    font-size: clamp(17px, 2.1vw, 21px);
-    line-height: 1.55;
+    font-size: clamp(21px, 2.5vw, 28px);
+    line-height: 1.4;
     max-width: 560px;
-    margin: 14px 0 0;
+    margin: 16px 0 0;
     color: var(--muted);
   }
   .hero .ctas {
@@ -274,6 +274,7 @@
     scroll-margin-top: 70px;
   }
   .section-head {
+    position: relative;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -293,6 +294,59 @@
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--muted);
+  }
+  .pulse-dot {
+    display: inline-block;
+    color: var(--signal);
+    animation: status-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes status-pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+  }
+  .section-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 0;
+    background: var(--signal);
+    transition: width 0.45s ease;
+  }
+  .section-head.is-active::after { width: 100%; }
+  .section-head .signal-dot {
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--signal-strong);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .section-head.is-active .signal-dot {
+    animation: signal-travel 0.6s ease forwards;
+  }
+  @keyframes signal-travel {
+    0% { left: 0; opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+  .section-head.is-active span:not(.signal-dot):not(.pulse-dot) {
+    animation: label-brighten 0.6s ease;
+  }
+  @keyframes label-brighten {
+    0% { color: var(--muted); }
+    40% { color: var(--ink); }
+    100% { color: var(--muted); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-dot { animation: none; opacity: 0.8; }
+    .section-head::after, .section-head .signal-dot { display: none; }
+    .section-head.is-active span:not(.signal-dot):not(.pulse-dot) { animation: none; }
   }
 
   .grid {
@@ -314,6 +368,75 @@
   .card:last-child { padding-bottom: 8px; }
   .card:hover h3, .card:focus-visible h3,
   .card:hover .watch, .card:focus-visible .watch { color: var(--signal); }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 1px;
+    width: 0;
+    background: var(--signal);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .card.will-animate .num,
+  .card.will-animate h3,
+  .card.will-animate .company-context,
+  .card.will-animate .company-tagline,
+  .card.will-animate .my-project,
+  .card.will-animate .watch {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .card.is-visible::before { animation: card-line-boot 0.5s ease forwards; }
+  .card.is-visible .num { animation: card-fade-up 0.35s ease forwards; }
+  .card.is-visible h3 { animation: card-fade-up 0.4s ease 0.05s forwards; }
+  .card.is-visible .company-context,
+  .card.is-visible .company-tagline,
+  .card.is-visible .my-project,
+  .card.is-visible .watch { animation: card-fade-up 0.4s ease 0.1s forwards; }
+  .card.is-visible .num::after {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: var(--signal-strong);
+    animation: signal-blip 0.5s ease 0.15s forwards;
+    opacity: 0;
+    vertical-align: middle;
+  }
+  @keyframes card-line-boot {
+    0% { width: 0; opacity: 1; }
+    70% { width: 100%; opacity: 1; }
+    100% { width: 100%; opacity: 0; }
+  }
+  @keyframes card-fade-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes signal-blip {
+    0% { opacity: 0; transform: scale(0.6); }
+    50% { opacity: 1; transform: scale(1.3); }
+    100% { opacity: 0.9; transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card::before { display: none; }
+    .card.will-animate .num,
+    .card.will-animate h3,
+    .card.will-animate .company-context,
+    .card.will-animate .company-tagline,
+    .card.will-animate .my-project,
+    .card.will-animate .watch { opacity: 1; transform: none; }
+    .card.is-visible .num,
+    .card.is-visible h3,
+    .card.is-visible .company-context,
+    .card.is-visible .company-tagline,
+    .card.is-visible .my-project,
+    .card.is-visible .watch { animation: none; }
+    .card.is-visible .num::after { display: none; }
+  }
 
   .card .num {
     font-family: var(--font-mono);
@@ -603,6 +726,30 @@
     color: var(--muted);
     margin: 0;
   }
+  .tool-signal {
+    position: relative;
+    display: block;
+    width: 26px;
+    height: 1px;
+    background: var(--signal);
+    margin-top: 6px;
+    opacity: 0;
+    transform: scaleX(0.3);
+    transform-origin: left;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .tool-signal::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-strong);
+    transform: translateY(-50%);
+  }
+  .tool-card:hover .tool-signal { opacity: 1; transform: scaleX(1); }
 
   .stack-marquee {
     overflow: hidden;
@@ -742,12 +889,12 @@
   /* ---------- about ---------- */
   .about { padding: 64px clamp(20px, 5vw, 56px) 100px; scroll-margin-top: 70px; }
   .about .about-line {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(20px, 2.6vw, 26px);
-    line-height: 1.5;
-    max-width: 60ch;
-    margin: 0 0 16px;
+    font-family: var(--font-script);
+    font-weight: 400;
+    font-size: clamp(18px, 2vw, 23px);
+    line-height: 1.55;
+    max-width: 92%;
+    margin: 0;
     color: var(--ink);
   }
   .about p.body {
@@ -923,6 +1070,23 @@
     text-align: center;
     padding: 20px;
   }
+  .loom-embed {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--paper-panel);
+    margin: 18px 0 6px;
+  }
+  .loom-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
   .video-embed--hero {
     min-height: clamp(240px, 42vw, 440px);
     background: var(--paper-panel-2);
@@ -981,6 +1145,24 @@
     width: 1px;
     background: var(--line);
     z-index: 0;
+  }
+  .wf-signal {
+    position: absolute;
+    left: 25px;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background: var(--signal-strong);
+    box-shadow: 0 0 6px rgba(120,168,255,0.6);
+    transition: top 0.35s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wf-signal { transition: none; }
   }
   @media (max-width: 700px) {
     .workflow-steps { border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
@@ -1126,6 +1308,82 @@
   }
   .chain .arrow { opacity: 0.5; }
 
+  /* outreach system output (Caretta) */
+  .outreach-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 18px 0 6px;
+  }
+  .outreach-card { background: var(--paper-panel); }
+  .oc-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    transition: color 0.15s ease;
+  }
+  .oc-header:hover, .outreach-card.open .oc-header { color: var(--ink); }
+  .oc-num { flex-shrink: 0; width: 20px; }
+  .oc-name {
+    flex: 1;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .oc-angle {
+    flex-shrink: 0;
+    color: var(--signal);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+  .oc-toggle {
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  .outreach-card.open .oc-toggle { transform: rotate(45deg); }
+  .oc-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 18px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .outreach-card.open .oc-content {
+    max-height: 700px;
+    padding: 0 18px 18px;
+  }
+  .oc-subject {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin: 0 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .oc-body {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    white-space: pre-line;
+    margin: 0;
+  }
+
   .pv-next {
     margin-top: 54px;
     padding-top: 30px;
@@ -1193,6 +1451,98 @@
       glow.classList.remove('is-active');
     });
   })();
+
+  /* ---- scroll-triggered section activation ---- */
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+    var heads = document.querySelectorAll('.section-head');
+    if (!heads.length || !window.IntersectionObserver) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    heads.forEach(function (el) { observer.observe(el); });
+  })();
+
+  /* ---- project card system-boot effect ---- */
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cards = document.querySelectorAll('.card');
+    if (!cards.length) return;
+    if (reduceMotion || !window.IntersectionObserver) return;
+    cards.forEach(function (card) { card.classList.add('will-animate'); });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    cards.forEach(function (card) { observer.observe(card); });
+  })();
+
+  /* ---- magnetic CTA (main hero button only) ---- */
+  (function () {
+    var cta = document.querySelector('.hero .btn-primary');
+    if (!cta) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (reduceMotion || isTouch) return;
+    var raf = null;
+    var radius = 90;
+    var maxPull = 4;
+    window.addEventListener('pointermove', function (e) {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        var rect = cta.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = e.clientX - cx;
+        var dy = e.clientY - cy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < radius) {
+          var pull = (1 - dist / radius) * maxPull;
+          var angle = Math.atan2(dy, dx);
+          cta.style.transform = 'translate(' + (Math.cos(angle) * pull).toFixed(1) + 'px,' + (Math.sin(angle) * pull).toFixed(1) + 'px)';
+        } else {
+          cta.style.transform = '';
+        }
+        raf = null;
+      });
+    }, { passive: true });
+    window.addEventListener('pointerleave', function () {
+      cta.style.transform = '';
+    });
+  })();
+
+  /* ---- workflow signal-travel helper (used by the main app script) ---- */
+  window.positionWfSignal = function (projKey, idx, animate) {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var container = document.getElementById('workflow-' + projKey);
+    if (!container) return;
+    var signal = container.querySelector('.wf-signal');
+    var btns = container.querySelectorAll('.workflow-steps button');
+    var target = btns[idx];
+    if (!signal || !target) return;
+    var containerRect = container.querySelector('.workflow-steps').getBoundingClientRect();
+    var btnRect = target.getBoundingClientRect();
+    var top = btnRect.top - containerRect.top + btnRect.height / 2;
+    if (!animate || reduceMotion) {
+      signal.style.transition = 'none';
+      signal.style.top = top + 'px';
+      // force reflow so the transition is re-enabled cleanly for the next move
+      void signal.offsetHeight;
+      signal.style.transition = '';
+    } else {
+      signal.style.top = top + 'px';
+    }
+  };
 </script>
 
 <div class="topbar">
@@ -1223,7 +1573,8 @@
   <section class="projects shell" id="projects">
     <div class="section-head">
       <h2>GTM Engineering Projects</h2>
-      <span>03 SYSTEMS</span>
+      <span><span class="pulse-dot" aria-hidden="true">●</span> 03 SYSTEMS</span>
+      <span class="signal-dot" aria-hidden="true"></span>
     </div>
 
     <div class="grid">
@@ -1292,57 +1643,68 @@
     <div class="section-head">
       <h2>Tools</h2>
       <span>GTM TOOLKIT</span>
+      <span class="signal-dot" aria-hidden="true"></span>
     </div>
     <div class="tool-grid">
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/apollo.png" alt="Apollo logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Apollo</p>
         <p class="tool-desc">Contact &amp; account intelligence</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/prospeo.png" alt="Prospeo logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Prospeo</p>
         <p class="tool-desc">Email finding &amp; enrichment</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/linkedin.png" alt="LinkedIn logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">LinkedIn Sales Navigator</p>
         <p class="tool-desc">Account &amp; prospect research</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/clay.png" alt="Clay logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Clay</p>
         <p class="tool-desc">GTM data enrichment &amp; workflows</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/smartlead.png" alt="Smartlead logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Smartlead</p>
         <p class="tool-desc">Cold email infrastructure</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/heyreach.png" alt="HeyReach logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">HeyReach</p>
         <p class="tool-desc">LinkedIn outreach</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/instantly.png" alt="Instantly logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Instantly</p>
         <p class="tool-desc">Cold email outreach</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/claude.png" alt="Claude logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">Claude Code</p>
         <p class="tool-desc">AI-assisted development</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/n8n.png" alt="n8n logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">n8n</p>
         <p class="tool-desc">Workflow automation</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
       <div class="tool-card">
         <div class="tool-mark"><img src="assets/tools/hubspot.png" alt="HubSpot logo" width="24" height="24" loading="lazy"></div>
         <p class="tool-name">HubSpot</p>
         <p class="tool-desc">CRM &amp; GTM activation</p>
+        <span class="tool-signal" aria-hidden="true"></span>
       </div>
     </div>
   </section>
@@ -1351,6 +1713,7 @@
     <div class="section-head">
       <h2>Experience</h2>
       <span>2024 — 2026</span>
+      <span class="signal-dot" aria-hidden="true"></span>
     </div>
 
     <div class="exp-item">
@@ -1388,9 +1751,9 @@
   <section class="about shell" id="about">
     <div class="section-head">
       <h2>About</h2>
+      <span class="signal-dot" aria-hidden="true"></span>
     </div>
-    <p class="about-line">I like building things that make GTM work a little less messy.</p>
-    <p class="body">GTM Engineer building research, enrichment, outbound, and CRM systems that turn messy market and account data into working GTM pipelines. That comes from a background spanning early-stage startup operations, healthcare workflows, account qualification, data enrichment, and workflow automation.</p>
+    <p class="about-line">I joined an early stage startup and worked closely with the founders, where every day brought a new problem to figure out. Digging into the problem, understanding what was actually going on, and finding a way forward was genuinely the fun part. The challenge was that a lot of it was still manual. Learning GTM engineering showed me I could turn that problem solving into systems, and now I want to keep solving problems across different industries and different kinds of work.</p>
   </section>
 
   <section class="contact" id="contact">
@@ -1400,13 +1763,12 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
         LinkedIn ↗
       </a>
-      <a href="mailto:fyamina.gtm@gmail.com">Email ↗</a>
+      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=fyamina.gtm@gmail.com" target="_blank" rel="noopener noreferrer">Email ↗</a>
     </div>
   </section>
 
   <footer class="shell">
     <p>Fyamina Rout — GTM Engineer</p>
-    <p>M.Sc. Biotechnology, Ravenshaw University · 2022 &nbsp;·&nbsp; B.Sc. Biotechnology, OUAT · 2020</p>
     <a class="foot-link" href="https://www.linkedin.com/in/fyamina-rout/" target="_blank" rel="noopener">LINKEDIN ↗</a>
   </footer>
 </main>
@@ -1463,19 +1825,101 @@
           num: "PART 02 — CLAY",
           title: "Building the List",
           body: "The Clay workflow I created from the strategy.",
-          cta: "WATCH PART 02 →"
+          cta: "WATCH PART 02 →",
+          loom: "https://www.loom.com/embed/49780b23e4f349e6af85b0f8c81af8b8"
         },
         {
           num: "PART 03 — OUTREACH",
           title: "Turning Research Into Outreach",
           body: "This Loom explains how I used the Clay research and workflow to build the outreach.",
-          cta: "WATCH PART 03 →"
+          cta: "WATCH PART 03 →",
+          loom: "https://www.loom.com/embed/046b2ef9aaf44f54887cf68a8558e1a1"
         }
       ],
       outreach: {
         title: "Caretta — Outreach Playbook",
         sub: "Email · LinkedIn · HeyReach",
         cta: "OPEN OUTREACH PLAYBOOK →"
+      },
+      outreachSystem: {
+        linkedin: [
+          {
+            stage: "01",
+            name: "CONNECTION REQUEST",
+            angle: "Signal",
+            body: `{{FirstName}}, saw {{Company}}'s opening up a few AE seats. Made me wonder how a new hire there gets comfortable enough to run a technical call solo. Mostly curious. Open to connecting either way.
+
+Thanks
+Fyamina!`
+          },
+          {
+            stage: "02",
+            name: "POST-ACCEPTANCE",
+            angle: "Trigger",
+            body: `Thanks for connecting, {{FirstName}}. Curious how many separate tools touch a single sales call at {{Company}} today notes, CRM update, follow-up. Does it all stay in sync, or does something usually fall through the cracks?
+
+Thanks
+Fyamina!`
+          },
+          {
+            stage: "03",
+            name: "FOLLOW-UP",
+            angle: "Social Proof",
+            body: `{{FirstName}}, we recently played a 30-second recording of a real sales call for 100+ sales leaders. What surprised me wasn't the reaction to the product, it was how many admitted they had no real way of knowing how consistent their own reps actually were. Is that visibility something {{Company}} already has, or is it mostly a gut feeling?
+
+Thanks
+Fyamina!`
+          }
+        ],
+        email: [
+          {
+            stage: "01",
+            name: "FIRST TOUCH",
+            angle: "Signal",
+            subject: "ramping new AEs at {{Company}}",
+            body: `{{FirstName}}, saw {{Company}}'s opening up a few AE seats.
+
+Most teams that hire this fast end up with two or three people who quietly become the go-to for the hard questions on a call.
+
+How do you know a new hire's actually ready to run a technical call solo, versus just comfortable with the deck?
+
+Thanks
+Fyamina!`
+          },
+          {
+            stage: "02",
+            name: "NEW ANGLE",
+            angle: "CRM",
+            subject: "what happens to your CRM after a big call?",
+            body: `{{FirstName}} different question this time, unrelated to my last note.
+
+When {{Company}}'s AEs come off a big call, how does the CRM actually get updated right away, end of day, or whenever someone remembers?
+
+Thanks
+Fyamina!`
+          },
+          {
+            stage: "03",
+            name: "CLOSING",
+            angle: "Permission to Say No",
+            subject: "last note, {{FirstName}}",
+            body: `{{FirstName}} I'll leave this with you.
+
+I'm guessing one of these is true:
+
+- Ramping new AEs just isn't something {{Company}}'s actively working on right now.
+- You've already got a solid way of keeping every rep consistent.
+- I just missed the mark with what I sent over.
+
+Which one is it?
+
+One last thing before I go, a customer of ours ran a few mock pitch calls with Caretta just to test it, and asked to invest in us a couple hours later. Wasn't the pitch that did it, it was using it. If ramp time ever becomes the priority, my door's open.
+
+Thanks
+Fyamina!`
+          }
+        ],
+        heyreach: ["CONNECTION REQUEST", "POST-ACCEPTANCE", "FOLLOW-UP 1", "FOLLOW-UP 2", "CLOSING"]
       },
       next: 3
     },
@@ -1486,10 +1930,11 @@
       title: "Beacon Health",
       sub: "Healthcare GTM Engine",
       tagline: "Designed an account discovery and qualification system for primary-care organizations, layering operational-workflow and EHR detection into the qualification logic. Built signal-based prioritization — hiring signals, a fit score, and a \"why now\" layer — to separate high-fit accounts from a broad healthcare market. Connected qualified accounts to contact discovery and outreach, turning raw market data into an actionable account list.",
-      parts: [
-        { num: "PART 01", title: "Research & Qualification", body: "Placeholder — walkthrough of research and qualification to come.", cta: "WATCH PART 01 →" },
-        { num: "PART 02", title: "Building the Workflow", body: "Placeholder — walkthrough of building the workflow to come.", cta: "WATCH PART 02 →" }
-      ],
+      video: {
+        title: "WATCH WHAT I BUILT",
+        sub: "A walkthrough of the complete Healthcare GTM Engine.",
+        loom: "https://www.loom.com/embed/890139c136d94741b8e78d51b12e4398"
+      },
       workflow: [
         { label: "Account Discovery", body: "Placeholder — detail on this stage to come." },
         { label: "Primary Care Qualification", body: "Placeholder — detail on this stage to come." },
@@ -1520,6 +1965,14 @@
     `;
   }
 
+  function LoomEmbed(url, title) {
+    return `
+      <div class="loom-embed">
+        <iframe src="${url}" title="${title} — Loom walkthrough" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+    `;
+  }
+
   function Workflow(projKey, steps) {
     const stepsHtml = steps.map((s, i) => `
       <button type="button"
@@ -1534,7 +1987,7 @@
 
     return `
       <div class="workflow" id="workflow-${projKey}">
-        <div class="workflow-steps">${stepsHtml}</div>
+        <div class="workflow-steps">${stepsHtml}<span class="wf-signal" aria-hidden="true"></span></div>
         <div class="workflow-panel" id="workflow-panel-${projKey}">
           ${WorkflowPanelContent(steps[0], 0)}
         </div>
@@ -1559,6 +2012,7 @@
       btn.classList.toggle('active', Number(btn.dataset.idx) === idx);
     });
     document.getElementById('workflow-panel-' + projKey).innerHTML = WorkflowPanelContent(p.workflow[idx], idx);
+    if (window.positionWfSignal) window.positionWfSignal(projKey, idx, true);
   }
 
   function TechChips(tags) {
@@ -1584,6 +2038,31 @@
   function showDocNote(btn) {
     const note = btn.closest('.doc-card').nextElementSibling;
     if (note) note.style.display = 'block';
+  }
+
+  function OutreachCard(item) {
+    const subjectHtml = item.subject ? `<p class="oc-subject">Subject: ${item.subject}</p>` : '';
+    return `
+      <div class="outreach-card">
+        <button type="button" class="oc-header" onclick="toggleOutreachCard(this)" aria-expanded="false">
+          <span class="oc-num">${item.stage}</span>
+          <span class="oc-name">${item.name}</span>
+          <span class="oc-angle">${item.angle}</span>
+          <span class="oc-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="oc-content">
+          ${subjectHtml}
+          <p class="oc-body">${item.body}</p>
+        </div>
+      </div>
+    `;
+  }
+
+  function toggleOutreachCard(btn) {
+    const card = btn.closest('.outreach-card');
+    if (!card) return;
+    const open = card.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
 
   /* ---------------- project page rendering ---------------- */
@@ -1613,7 +2092,7 @@
         <p class="pv-eyebrow-sm">${part.num}</p>
         <h2>${part.title}</h2>
         <p>${part.body}</p>
-        ${VideoEmbed(part.cta)}
+        ${part.loom ? LoomEmbed(part.loom, part.title) : VideoEmbed(part.cta)}
       </div>
     `).join('');
 
@@ -1621,27 +2100,29 @@
       ${renderHeader(p)}
       ${partsHtml}
       <div class="pv-section">
-        <h2>The Outreach</h2>
-        <p>I have a document containing the outreach I prepared for Caretta — LinkedIn copy, email copy, and a HeyReach sequence.</p>
-        ${DocCard(p.outreach)}
+        <h2>LinkedIn Outreach</h2>
+        <div class="outreach-list">${p.outreachSystem.linkedin.map(item => OutreachCard(item)).join('')}</div>
+      </div>
+      <div class="pv-section">
+        <h2>Email Outreach</h2>
+        <div class="outreach-list">${p.outreachSystem.email.map(item => OutreachCard(item)).join('')}</div>
+      </div>
+      <div class="pv-section">
+        <h2>HeyReach Sequence</h2>
+        <div class="chain">${p.outreachSystem.heyreach.map((s, i) => i === 0 ? `<span>${s}</span>` : `<span class="arrow">→</span><span>${s}</span>`).join('')}</div>
       </div>
       ${renderNext(p)}
     `;
   }
 
   function renderBeacon(p) {
-    const partsHtml = p.parts.map(part => `
-      <div class="pv-section">
-        <p class="pv-eyebrow-sm">${part.num}</p>
-        <h2>${part.title}</h2>
-        <p>${part.body}</p>
-        ${VideoEmbed(part.cta)}
-      </div>
-    `).join('');
-
     return `
       ${renderHeader(p)}
-      ${partsHtml}
+      <div class="pv-section">
+        <h2>${p.video.title}</h2>
+        <p>${p.video.sub}</p>
+        ${LoomEmbed(p.video.loom, p.video.title)}
+      </div>
       <div class="pv-section">
         <h2>The Workflow</h2>
         <p>Click a step to see what happens at that stage.</p>
@@ -1682,6 +2163,9 @@
     if (p.type === 'caretta') el.innerHTML = renderCaretta(p);
     else if (p.type === 'beacon') el.innerHTML = renderBeacon(p);
     else if (p.type === 'nursing') el.innerHTML = renderNursing(p);
+    if (p.workflow && window.positionWfSignal) {
+      requestAnimationFrame(() => window.positionWfSignal(p.key, 0, false));
+    }
   }
 
   function openProject(id) {
