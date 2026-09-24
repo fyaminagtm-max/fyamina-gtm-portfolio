@@ -366,10 +366,33 @@
     cursor: pointer;
     border: 1px solid var(--line);
     background: var(--paper-panel);
-    transition: border-color 0.15s ease, color 0.15s ease;
+    z-index: 0;
+    transition: border-color 0.25s ease, color 0.15s ease, background 0.25s ease, box-shadow 0.25s ease;
     text-align: left;
   }
-  .card:hover, .card:focus-visible { border-color: var(--signal); }
+  .card > * {
+    position: relative;
+    z-index: 1;
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 15%, rgba(110,168,255,0.18), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .card:hover, .card:focus-visible {
+    border-color: var(--signal);
+    background: var(--paper-panel-2);
+    box-shadow: 0 0 20px rgba(110,168,255,0.22);
+    z-index: 1;
+  }
+  .card--proud:hover, .card--proud:focus-visible {
+    background: color-mix(in srgb, var(--paper-panel-2), var(--signal) 8%);
+  }
+  .card:hover::after, .card:focus-visible::after { opacity: 1; }
   .card:hover h3, .card:focus-visible h3,
   .card:hover .watch, .card:focus-visible .watch { color: var(--signal); }
   .card::before {
