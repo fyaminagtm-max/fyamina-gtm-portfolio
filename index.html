@@ -362,7 +362,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 30px;
     cursor: pointer;
     border: 1px solid var(--line);
@@ -371,7 +370,8 @@
     text-align: left;
   }
   .card:hover, .card:focus-visible { border-color: var(--signal); }
-  .card:hover h3, .card:focus-visible h3 { color: var(--signal); }
+  .card:hover h3, .card:focus-visible h3,
+  .card:hover .watch, .card:focus-visible .watch { color: var(--signal); }
   .card::before {
     content: "";
     position: absolute;
@@ -498,54 +498,10 @@
     color: var(--muted);
   }
   .card .watch {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    width: 100%;
-    max-width: 280px;
-    aspect-ratio: 16 / 9;
-    margin-top: 28px;
-    border: 1px solid rgba(5, 11, 22, 0.16);
-    border-radius: 0;
-    background: var(--ink);
-    text-align: center;
-    transition: border-color 0.2s ease, background 0.2s ease;
-  }
-  .watch-play {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    padding-left: 3px;
-    border: 1px solid rgba(5, 11, 22, 0.28);
-    border-radius: 50%;
-    font-size: 15px;
-    color: var(--paper);
-    transition: transform 0.2s ease;
-  }
-  .watch-label {
+    margin-top: 24px;
     font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: rgba(5, 11, 22, 0.72);
-  }
-  @media (max-width: 560px) {
-    .card .watch { max-width: none; }
-  }
-  .card:hover .watch,
-  .card:focus-visible .watch {
-    border-color: rgba(5, 11, 22, 0.32);
-    background: #E9EEF6;
-  }
-  .card:hover .watch-play,
-  .card:focus-visible .watch-play { transform: scale(1.06); }
-  @media (prefers-reduced-motion: reduce) {
-    .card .watch, .watch-play { transition: none; }
-    .card:hover .watch-play, .card:focus-visible .watch-play { transform: none; }
+    font-size: 13px;
+    letter-spacing: 0.04em;
   }
 
   .card-deco { display: none; }
@@ -1649,10 +1605,7 @@
           <p class="sub">Overseas Placement Supply Chain</p>
           <p class="desc">Built an end-to-end GTM intelligence system spanning market discovery, account classification, international-hiring intelligence, India-eligibility screening, nursing demand mapping, and requirement/relationship tracking.</p>
         </div>
-        <div class="watch">
-          <span class="watch-play" aria-hidden="true">▶</span>
-          <span class="watch-label">WATCH WHAT I BUILT</span>
-        </div>
+        <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
 
       <!-- PROJECT 02 -->
@@ -1670,10 +1623,7 @@
             <p class="desc">Designed an account discovery and qualification system for primary-care organizations, layering operational-workflow and EHR detection into the qualification logic.</p>
           </div>
         </div>
-        <div class="watch">
-          <span class="watch-play" aria-hidden="true">▶</span>
-          <span class="watch-label">WATCH WHAT I BUILT</span>
-        </div>
+        <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
 
       <!-- PROJECT 03 -->
@@ -1694,10 +1644,7 @@
             <p class="desc">Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact.</p>
           </div>
         </div>
-        <div class="watch">
-          <span class="watch-play" aria-hidden="true">▶</span>
-          <span class="watch-label">WATCH WHAT I BUILT</span>
-        </div>
+        <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
     </div>
   </section>
