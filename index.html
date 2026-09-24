@@ -350,22 +350,27 @@
   }
 
   .grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
   }
 
   .card {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 40px 0;
+    justify-content: space-between;
+    padding: 30px;
     cursor: pointer;
-    border-top: 1px solid var(--line);
-    background: none;
-    transition: color 0.15s ease;
+    border: 1px solid var(--line);
+    background: var(--paper-panel);
+    transition: border-color 0.15s ease, color 0.15s ease;
     text-align: left;
   }
-  .card:last-child { padding-bottom: 8px; }
+  .card:hover, .card:focus-visible { border-color: var(--signal); }
   .card:hover h3, .card:focus-visible h3 { color: var(--signal); }
   .card::before {
     content: "";
@@ -567,7 +572,12 @@
   }
 
   /* card 3: proudest build — same row system, restrained flagship emphasis */
-  .card--proud { border-top: 2px solid var(--signal); }
+  .card--proud {
+    grid-column: 1 / -1;
+    padding: 40px clamp(24px, 4vw, 44px);
+    border-top: 2px solid var(--signal);
+    background: var(--paper-panel-2);
+  }
   .card--proud h3 { font-size: clamp(28px, 4vw, 40px); }
   .card--proud .badge {
     font-family: var(--font-mono);
@@ -1646,36 +1656,12 @@
       </article>
 
       <!-- PROJECT 02 -->
-      <article class="card" tabindex="0" role="button" aria-label="Open Caretta case study" onclick="openProject(2)" onkeydown="if(event.key==='Enter')openProject(2)">
-        <svg class="card-deco" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M300 20 L230 20 L230 70 L190 70" fill="none" stroke="var(--line)" stroke-width="1.5"/>
-          <circle cx="190" cy="70" r="3.5" fill="var(--signal)"/>
-          <path d="M300 100 L260 100 L260 150" fill="none" stroke="var(--line)" stroke-width="1.5"/>
-          <circle cx="260" cy="150" r="3.5" fill="var(--signal)"/>
-        </svg>
-        <div>
-          <p class="num">PROJECT 02</p>
-          <h3>Caretta</h3>
-          <p class="company-context">YC W26 · B2B Sales</p>
-          <p class="company-tagline">Realtime AI for Sales Calls</p>
-          <div class="my-project">
-            <p class="sub">Outbound Engine</p>
-            <p class="desc">Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact.</p>
-          </div>
-        </div>
-        <div class="watch">
-          <span class="watch-play" aria-hidden="true">▶</span>
-          <span class="watch-label">WATCH WHAT I BUILT</span>
-        </div>
-      </article>
-
-      <!-- PROJECT 03 -->
       <article class="card" tabindex="0" role="button" aria-label="Open Beacon Health case study" onclick="openProject(3)" onkeydown="if(event.key==='Enter')openProject(3)">
         <svg class="card-deco" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
           <polyline points="0,190 60,190 80,150 100,220 120,190 300,190" fill="none" stroke="var(--signal)" stroke-width="1.5" opacity="0.5"/>
         </svg>
         <div>
-          <p class="num">PROJECT 03</p>
+          <p class="num">PROJECT 02</p>
           <h3>Beacon Health</h3>
           <p class="company-context">YC W26 · Healthcare</p>
           <p class="company-tagline">AI Employees for Primary Care</p>
@@ -1690,6 +1676,29 @@
         </div>
       </article>
 
+      <!-- PROJECT 03 -->
+      <article class="card" tabindex="0" role="button" aria-label="Open Caretta case study" onclick="openProject(2)" onkeydown="if(event.key==='Enter')openProject(2)">
+        <svg class="card-deco" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M300 20 L230 20 L230 70 L190 70" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <circle cx="190" cy="70" r="3.5" fill="var(--signal)"/>
+          <path d="M300 100 L260 100 L260 150" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+          <circle cx="260" cy="150" r="3.5" fill="var(--signal)"/>
+        </svg>
+        <div>
+          <p class="num">PROJECT 03</p>
+          <h3>Caretta</h3>
+          <p class="company-context">YC W26 · B2B Sales</p>
+          <p class="company-tagline">Realtime AI for Sales Calls</p>
+          <div class="my-project">
+            <p class="sub">Outbound Engine</p>
+            <p class="desc">Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact.</p>
+          </div>
+        </div>
+        <div class="watch">
+          <span class="watch-play" aria-hidden="true">▶</span>
+          <span class="watch-label">WATCH WHAT I BUILT</span>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -1840,6 +1849,7 @@
       key: 1,
       type: 'nursing',
       star: true,
+      order: 1,
       eyebrow: "PROJECT 01 — OVERSEAS PLACEMENT SUPPLY CHAIN",
       title: "Nursing Intelligence",
       sub: "Overseas Placement Supply Chain",
@@ -1863,12 +1873,13 @@
         { label: "CRM Activation", body: "Placeholder — detail on this stage to come." }
       ],
       tech: ["Claude", "Clay", "n8n", "HubSpot"],
-      next: 2
+      next: 3
     },
     2: {
       key: 2,
       type: 'caretta',
-      eyebrow: "PROJECT 02 — OUTBOUND ENGINE",
+      order: 3,
+      eyebrow: "PROJECT 03 — OUTBOUND ENGINE",
       title: "Caretta",
       sub: "Outbound Engine",
       tagline: "Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact. Structured account and contact research in Clay so qualification data fed directly into a working outbound workflow, not a static report. Converted qualified research into personalized outbound sequences through to execution.",
@@ -1979,12 +1990,13 @@ Fyamina!`
           }
         ]
       },
-      next: 3
+      next: 1
     },
     3: {
       key: 3,
       type: 'beacon',
-      eyebrow: "PROJECT 03 — HEALTHCARE GTM ENGINE",
+      order: 2,
+      eyebrow: "PROJECT 02 — HEALTHCARE GTM ENGINE",
       title: "Beacon Health",
       sub: "Healthcare GTM Engine",
       tagline: "Designed an account discovery and qualification system for primary-care organizations, layering operational-workflow and EHR detection into the qualification logic. Built signal-based prioritization — hiring signals, a fit score, and a \"why now\" layer — to separate high-fit accounts from a broad healthcare market. Connected qualified accounts to contact discovery and outreach, turning raw market data into an actionable account list.",
@@ -2004,7 +2016,7 @@ Fyamina!`
         { label: "Contact", body: "Placeholder — detail on this stage to come." },
         { label: "Outreach", body: "Placeholder — detail on this stage to come." }
       ],
-      next: 1
+      next: 2
     }
   };
 
@@ -2138,7 +2150,7 @@ Fyamina!`
   function renderNext(p) {
     return `
       <div class="pv-next">
-        <span class="status" style="font-family:var(--font-mono); font-size:12px; opacity:0.5;">CASE STUDY ${p.key} OF 3</span>
+        <span class="status" style="font-family:var(--font-mono); font-size:12px; opacity:0.5;">CASE STUDY ${p.order} OF 3</span>
         <a href="#" onclick="openProject(${p.next}); return false;">Next project →</a>
       </div>
     `;
