@@ -1548,8 +1548,8 @@
 <div class="topbar">
   <a class="mark" href="#" onclick="goHome(); return false;">FR</a>
   <nav class="topbar-nav" aria-label="Primary">
-    <button onclick="navGo('projects')">Work</button>
-    <button onclick="navGo('experience')">Experience</button>
+    <button onclick="navGo('projects')">Projects</button>
+    <button onclick="navGo('experience')">Work Experience</button>
     <button onclick="navGo('about')">About</button>
     <button onclick="navGo('contact')">Contact</button>
   </nav>
@@ -1711,7 +1711,7 @@
 
   <section class="experience shell" id="experience">
     <div class="section-head">
-      <h2>Experience</h2>
+      <h2>Work Experience</h2>
       <span>2024 — 2026</span>
       <span class="signal-dot" aria-hidden="true"></span>
     </div>
@@ -1923,8 +1923,7 @@ One last thing before I go, a customer of ours ran a few mock pitch calls with C
 Thanks
 Fyamina!`
           }
-        ],
-        heyreach: ["CONNECTION REQUEST", "POST-ACCEPTANCE", "FOLLOW-UP 1", "FOLLOW-UP 2", "CLOSING"]
+        ]
       },
       next: 3
     },
@@ -2111,10 +2110,6 @@ Fyamina!`
       <div class="pv-section">
         <h2>Email Outreach</h2>
         <div class="outreach-list">${p.outreachSystem.email.map(item => OutreachCard(item)).join('')}</div>
-      </div>
-      <div class="pv-section">
-        <h2>HeyReach Sequence</h2>
-        <div class="chain">${p.outreachSystem.heyreach.map((s, i) => i === 0 ? `<span>${s}</span>` : `<span class="arrow">→</span><span>${s}</span>`).join('')}</div>
       </div>
       ${renderNext(p)}
     `;
