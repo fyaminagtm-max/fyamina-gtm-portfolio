@@ -500,32 +500,14 @@
     justify-content: center;
     gap: 14px;
     width: 100%;
-    max-width: 300px;
+    max-width: 360px;
     aspect-ratio: 16 / 9;
     margin-top: 28px;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(5, 11, 22, 0.16);
     border-radius: 0;
-    background: var(--paper-panel);
+    background: var(--ink);
     text-align: center;
-    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-  .card .watch::before,
-  .card .watch::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    pointer-events: none;
-  }
-  .card .watch::before {
-    top: -1px; left: -1px;
-    border-top: 1px solid var(--bracket);
-    border-left: 1px solid var(--bracket);
-  }
-  .card .watch::after {
-    bottom: -1px; right: -1px;
-    border-bottom: 1px solid var(--bracket);
-    border-right: 1px solid var(--bracket);
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
   .watch-play {
     display: flex;
@@ -534,38 +516,30 @@
     width: 48px;
     height: 48px;
     padding-left: 3px;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(5, 11, 22, 0.28);
     border-radius: 50%;
     font-size: 15px;
-    color: var(--muted);
-    transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    color: var(--paper);
+    transition: transform 0.2s ease;
   }
   .watch-label {
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.08em;
-    color: var(--muted);
-    transition: color 0.2s ease;
+    color: rgba(5, 11, 22, 0.72);
   }
   @media (max-width: 560px) {
     .card .watch { max-width: none; }
   }
   .card:hover .watch,
   .card:focus-visible .watch {
-    border-color: var(--signal);
-    background: var(--paper-panel-2);
-    box-shadow: 0 0 0 1px var(--signal-soft), 0 0 20px var(--signal-soft);
+    border-color: rgba(5, 11, 22, 0.32);
+    background: #E9EEF6;
   }
   .card:hover .watch-play,
-  .card:focus-visible .watch-play {
-    color: var(--signal-active);
-    border-color: var(--signal);
-    transform: scale(1.08);
-  }
-  .card:hover .watch-label,
-  .card:focus-visible .watch-label { color: var(--ink); }
+  .card:focus-visible .watch-play { transform: scale(1.06); }
   @media (prefers-reduced-motion: reduce) {
-    .card .watch, .watch-play, .watch-label { transition: none; }
+    .card .watch, .watch-play { transition: none; }
     .card:hover .watch-play, .card:focus-visible .watch-play { transform: none; }
   }
 
