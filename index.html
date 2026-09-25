@@ -550,7 +550,7 @@
     border-right: 1px solid var(--bracket);
   }
 
-  /* card 3: proudest build — same row system, restrained flagship emphasis */
+  /* card 3: flagship — same row system, restrained emphasis */
   .card--proud {
     grid-column: 1 / -1;
     padding: 40px clamp(24px, 4vw, 44px);
@@ -1618,8 +1618,8 @@
         <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
 
-      <!-- PROJECT 03 : proudest build -->
-      <article class="card card--proud" tabindex="0" role="button" aria-label="Open Nursing Intelligence case study, marked as proudest build" onclick="openProject(1)" onkeydown="if(event.key==='Enter')openProject(1)">
+      <!-- PROJECT 03 -->
+      <article class="card card--proud" tabindex="0" role="button" aria-label="Open Nursing Intelligence case study" onclick="openProject(1)" onkeydown="if(event.key==='Enter')openProject(1)">
         <svg class="card-deco" viewBox="0 0 700 220" preserveAspectRatio="none" aria-hidden="true">
           <path d="M20 180 Q 200 60, 380 140 T 680 40" fill="none" stroke="var(--proud-ink)" stroke-width="1.5" opacity="0.25"/>
           <circle cx="20" cy="180" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
@@ -1627,7 +1627,6 @@
           <circle cx="680" cy="40" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
         </svg>
         <div class="left">
-          <p class="badge">★ MY PROUDEST BUILD</p>
           <p class="num">PROJECT 03</p>
           <h3>Nursing Intelligence</h3>
           <p class="sub">Overseas Placement Supply Chain</p>
@@ -1784,7 +1783,6 @@
     1: {
       key: 1,
       type: 'nursing',
-      star: true,
       order: 3,
       eyebrow: "PROJECT 03 — OVERSEAS PLACEMENT SUPPLY CHAIN",
       title: "Nursing Intelligence",
@@ -2064,7 +2062,6 @@ Fyamina!`
   function renderHeader(p) {
     return `
       <button class="back" onclick="goHome()">&larr; Back to all projects</button>
-      ${p.star ? '<p class="pv-star">★ MY PROUDEST BUILD</p>' : ''}
       <p class="pv-eyebrow">${p.eyebrow}</p>
       <h1 class="pv-title">${p.title}</h1>
       <p class="pv-tagline">${p.tagline}</p>
