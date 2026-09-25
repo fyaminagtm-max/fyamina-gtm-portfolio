@@ -1579,31 +1579,13 @@
 
     <div class="grid">
 
-      <!-- PROJECT 01 : proudest build -->
-      <article class="card card--proud" tabindex="0" role="button" aria-label="Open Nursing Intelligence case study, marked as proudest build" onclick="openProject(1)" onkeydown="if(event.key==='Enter')openProject(1)">
-        <svg class="card-deco" viewBox="0 0 700 220" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M20 180 Q 200 60, 380 140 T 680 40" fill="none" stroke="var(--proud-ink)" stroke-width="1.5" opacity="0.25"/>
-          <circle cx="20" cy="180" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
-          <circle cx="380" cy="140" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
-          <circle cx="680" cy="40" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
-        </svg>
-        <div class="left">
-          <p class="badge">★ MY PROUDEST BUILD</p>
-          <p class="num">PROJECT 01</p>
-          <h3>Nursing Intelligence</h3>
-          <p class="sub">Overseas Placement Supply Chain</p>
-          <p class="desc">Built an end-to-end GTM intelligence system spanning market discovery, account classification, international-hiring intelligence, India-eligibility screening, nursing demand mapping, and requirement/relationship tracking.</p>
-        </div>
-        <p class="watch">WATCH WHAT I BUILT →</p>
-      </article>
-
-      <!-- PROJECT 02 -->
+      <!-- PROJECT 01 -->
       <article class="card" tabindex="0" role="button" aria-label="Open Beacon Health case study" onclick="openProject(3)" onkeydown="if(event.key==='Enter')openProject(3)">
         <svg class="card-deco" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
           <polyline points="0,190 60,190 80,150 100,220 120,190 300,190" fill="none" stroke="var(--signal)" stroke-width="1.5" opacity="0.5"/>
         </svg>
         <div>
-          <p class="num">PROJECT 02</p>
+          <p class="num">PROJECT 01</p>
           <h3>Beacon Health</h3>
           <p class="company-context">YC W26 · Healthcare</p>
           <p class="company-tagline">AI Employees for Primary Care</p>
@@ -1615,7 +1597,7 @@
         <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
 
-      <!-- PROJECT 03 -->
+      <!-- PROJECT 02 -->
       <article class="card" tabindex="0" role="button" aria-label="Open Caretta case study" onclick="openProject(2)" onkeydown="if(event.key==='Enter')openProject(2)">
         <svg class="card-deco" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
           <path d="M300 20 L230 20 L230 70 L190 70" fill="none" stroke="var(--line)" stroke-width="1.5"/>
@@ -1624,7 +1606,7 @@
           <circle cx="260" cy="150" r="3.5" fill="var(--signal)"/>
         </svg>
         <div>
-          <p class="num">PROJECT 03</p>
+          <p class="num">PROJECT 02</p>
           <h3>Caretta</h3>
           <p class="company-context">YC W26 · B2B Sales</p>
           <p class="company-tagline">Realtime AI for Sales Calls</p>
@@ -1632,6 +1614,24 @@
             <p class="sub">Outbound Engine</p>
             <p class="desc">Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact.</p>
           </div>
+        </div>
+        <p class="watch">WATCH WHAT I BUILT →</p>
+      </article>
+
+      <!-- PROJECT 03 : proudest build -->
+      <article class="card card--proud" tabindex="0" role="button" aria-label="Open Nursing Intelligence case study, marked as proudest build" onclick="openProject(1)" onkeydown="if(event.key==='Enter')openProject(1)">
+        <svg class="card-deco" viewBox="0 0 700 220" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M20 180 Q 200 60, 380 140 T 680 40" fill="none" stroke="var(--proud-ink)" stroke-width="1.5" opacity="0.25"/>
+          <circle cx="20" cy="180" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
+          <circle cx="380" cy="140" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
+          <circle cx="680" cy="40" r="3.5" fill="var(--proud-star)" opacity="0.9"/>
+        </svg>
+        <div class="left">
+          <p class="badge">★ MY PROUDEST BUILD</p>
+          <p class="num">PROJECT 03</p>
+          <h3>Nursing Intelligence</h3>
+          <p class="sub">Overseas Placement Supply Chain</p>
+          <p class="desc">Built an end-to-end GTM intelligence system spanning market discovery, account classification, international-hiring intelligence, India-eligibility screening, nursing demand mapping, and requirement/relationship tracking.</p>
         </div>
         <p class="watch">WATCH WHAT I BUILT →</p>
       </article>
@@ -1785,8 +1785,8 @@
       key: 1,
       type: 'nursing',
       star: true,
-      order: 1,
-      eyebrow: "PROJECT 01 — OVERSEAS PLACEMENT SUPPLY CHAIN",
+      order: 3,
+      eyebrow: "PROJECT 03 — OVERSEAS PLACEMENT SUPPLY CHAIN",
       title: "Nursing Intelligence",
       sub: "Overseas Placement Supply Chain",
       tagline: "Built an end-to-end GTM intelligence system spanning market discovery, account classification, international-hiring intelligence, India-eligibility screening, nursing demand mapping, and requirement/relationship tracking.",
@@ -1814,8 +1814,8 @@
     2: {
       key: 2,
       type: 'caretta',
-      order: 3,
-      eyebrow: "PROJECT 03 — OUTBOUND ENGINE",
+      order: 2,
+      eyebrow: "PROJECT 02 — OUTBOUND ENGINE",
       title: "Caretta",
       sub: "Outbound Engine",
       tagline: "Designed a strategy-to-outreach outbound engine: built ICP and targeting logic, researched and qualified accounts, and identified buying signals to prioritize who to contact. Structured account and contact research in Clay so qualification data fed directly into a working outbound workflow, not a static report. Converted qualified research into personalized outbound sequences through to execution.",
@@ -1931,8 +1931,8 @@ Fyamina!`
     3: {
       key: 3,
       type: 'beacon',
-      order: 2,
-      eyebrow: "PROJECT 02 — HEALTHCARE GTM ENGINE",
+      order: 1,
+      eyebrow: "PROJECT 01 — HEALTHCARE GTM ENGINE",
       title: "Beacon Health",
       sub: "Healthcare GTM Engine",
       tagline: "Designed an account discovery and qualification system for primary-care organizations, layering operational-workflow and EHR detection into the qualification logic. Built signal-based prioritization — hiring signals, a fit score, and a \"why now\" layer — to separate high-fit accounts from a broad healthcare market. Connected qualified accounts to contact discovery and outreach, turning raw market data into an actionable account list.",
